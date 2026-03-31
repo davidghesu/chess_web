@@ -38,13 +38,14 @@ venv\Scripts\activate
 source venv/bin/activate
 
 # Install dependencies
+cd chess
 pip install -r requirements.txt
 ```
 ### 3. Running the Application
 ```bash
 python server.py
 ```
-* **Open your browser and go to:** [http://localhost:5000](http://localhost:500)
+* **Open your browser and go to:** [http://localhost:5000](http://localhost:5000)
 
 ## 🛠️ Tech Stack
 
