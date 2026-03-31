@@ -1,0 +1,186 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #1c1c1c;
+    font-family: Georgia, serif;
+    color: #e8e0d0;
+    padding: 24px;
+    gap: 16px;
+}
+
+/* ── Status ──────────────────────────────────────────────── */
+#status {
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    color: #aaa;
+    min-height: 1.5em;
+}
+#status.my-turn { color: #d4a84b; }
+#status.alert   { color: #e05c5c; }
+
+#thinking {
+    font-size: 0.85rem;
+    color: #888;
+    font-style: italic;
+    min-height: 1.2em;
+}
+
+/* ── Tabla ───────────────────────────────────────────────── */
+#board {
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
+    border: 3px solid #582C2C;
+}
+
+.square {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.light { background: #7C4C3E; }
+.dark  { background: #582C2C; }
+
+.selected::after,
+.legal::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+.selected::after { background: rgba(255, 230, 50, 0.45); }
+.legal::after    { background: radial-gradient(circle, rgba(100,220,100,0.6) 28%, transparent 28%); }
+
+.square img {
+    width: 68px;
+    height: 68px;
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ── Promotion dialog ────────────────────────────────────── */
+
+#promo-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+#promo-overlay.hidden { display: none; }
+
+#promo-box {
+    background: #2a2a2a;
+    border: 1px solid #d4a84b;
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+#promo-box p {
+    color: #d4a84b;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+}
+#promo-choices {
+    display: flex;
+    gap: 12px;
+}
+.promo-btn {
+    width: 72px;
+    height: 72px;
+    background: transparent;
+    border: 1px solid #555;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+}
+.promo-btn:hover {
+    border-color: #d4a84b;
+    background: rgba(212,168,75,0.1);
+}
+.promo-btn img {
+    width: 56px;
+    height: 56px;
+}
+
+/* ── Lobby online ────────────────────────────────────────── */
+#lobby {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    padding: 32px 40px;
+}
+#lobby h2 { font-size: 1.2rem; font-weight: normal; color: #d4a84b; }
+#lobby .row { display: flex; gap: 8px; align-items: center; }
+
+#waiting-msg {
+    color: #d4a84b;
+    font-style: italic;
+    font-size: 0.95rem;
+    display: none;
+}
+
+input[type="text"] {
+    background: #1c1c1c;
+    border: 1px solid #555;
+    color: #e8e0d0;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    padding: 8px 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    outline: none;
+    width: 140px;
+}
+input[type="text"]:focus { border-color: #d4a84b; }
+
+button {
+    background: transparent;
+    border: 1px solid #555;
+    color: #e8e0d0;
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+button:hover { border-color: #d4a84b; background: rgba(212,168,75,0.08); }
+
+#room-code-display {
+    font-size: 2rem;
+    letter-spacing: 0.3em;
+    color: #d4a84b;
+    border: 1px solid #444;
+    padding: 8px 20px;
+    display: none;
+}
+#error-msg { color: #e05c5c; font-size: 0.85rem; min-height: 1.2em; }
+
+.back {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.85rem;
+    align-self: flex-start;
+}
+.back:hover { color: #d4a84b; }

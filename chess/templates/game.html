@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Chess</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  {% if mode == 'online' %}
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  {% endif %}
+</head>
+<body>
+
+<a href="/" class="back">← Back</a>
+<p id="status">—</p>
+<p id="thinking"></p>
+
+<!-- for promotion -->
+<div id="promo-overlay" class="hidden">
+  <div id="promo-box">
+    <p>Choose the piece for promotion:</p>
+    <div id="promo-choices"></div>
+  </div>
+</div>
+
+<!-- Lobby: vizible for online games -->
+{% if mode == 'online' %}
+<div id="lobby">
+  <h2>Online game</h2>
+  <div class="row" id="lobby-buttons">
+    <button onclick="createRoom()">Create room</button>
+    <span style="color:#555;">or</span>
+    <label for="code-input" style="display: none;">Introduce room's code</label>
+    <input id="code-input" type="text" placeholder="CODE" maxlength="6">
+    <button onclick="joinRoom()">Join</button>
+  </div>
+  <div id="room-code-display"></div>
+  <p id="waiting-msg">Se așteaptă adversarul...</p>
+  <p id="error-msg"></p>
+</div>
+{% endif %}
+
+<div id="board"></div>
+
+<!-- MODE must be defined before game.js -->
+<script>
+  const MODE = '{{ mode }}';
+</script>
+
+<script src="/static/js/game.js"></script>
+
+<!-- WebSocket events: online mode-->
+{% if mode == 'online' %}
+<script>
+  const socket = io();
+
+  socket.on('joined', data => {
+    playerColor = data.color;
+    board = data.board;
+  });
+
+  socket.on('start', () => {
+    document.getElementById('lobby').style.display = 'none';
+    gameActive = true;
+    render();
+  });
+
+  socket.on('update', data => { board = data; render(); });
+
+  socket.on('moves_result', moves => { legalMoves = moves; render(); });
+
+  socket.on('opponent_left', () => {
+    document.getElementById('status').textContent = 'Opponent has left the game.';
+    document.getElementById('status').className = 'alert';
+    gameActive = false;
+  });
+
+  socket.on('error_msg', data => {
+    document.getElementById('error-msg').textContent = data.msg;
+  });
+</script>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chess</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1c1c1c;
+      font-family: Georgia, serif;
+      color: #e8e0d0;
+    }
+
+    .card {
+      background: #2a2a2a;
+      border: 1px solid #444;
+      padding: 48px 56px;
+      text-align: center;
+      min-width: 320px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: normal;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      color: #d4a84b;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 40px;
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: #d4a84b;
+      margin: 0 auto 40px;
+    }
+
+    .btn {
+      display: block;
+      padding: 14px 24px;
+      margin-bottom: 12px;
+      background: transparent;
+      border: 1px solid #555;
+      color: #e8e0d0;
+      font-family: Georgia, serif;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn:hover {
+      border-color: #d4a84b;
+      background: rgba(212, 168, 75, 0.08);
+    }
+
+    .btn-label {
+      display: block;
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>♟ Chess</h1>
+  <p class="subtitle">Choose the game mode</p>
+  <div class="divider"></div>
+
+  <a href="/ai" class="btn">
+    Play with AI
+    <span class="btn-label">Minimax algorithm</span>
+  </a>
+
+  <a href="/online" class="btn">
+    Play Online
+    <span class="btn-label">with a friend, by room code</span>
+  </a>
+</div>
+</body>
+</html>
